@@ -45,6 +45,6 @@ import { TypePath } from './TypePath'
 import { TypeReference } from './TypeReference'
 
 export {
-    Attribute, ClassReader, ClassVisitor, ClassWriter, FieldVisitor, FieldWriter,
-    Handle, Label, MethodVisitor, MethodWriter, Opcodes, Type, TypePath, TypeReference, AnnotationVisitor
+    Attribute, ClassReader, ClassVisitor, FieldVisitor,
+    Handle, Label, MethodVisitor, Opcodes, Type, TypePath, TypeReference, AnnotationVisitor
 }
