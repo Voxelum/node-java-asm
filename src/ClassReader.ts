@@ -1875,7 +1875,7 @@ export class ClassReader {
                     break;
             }
         };
-        return buf.slice(0, strLen).map(c => String.fromCodePoint(c)).join('');
+        return buf.slice(0, strLen).map(c => String.fromCharCode(c)).join('');
     }
 
     /**
