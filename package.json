@@ -16,5 +16,5 @@
         "test": "tsc && node ./build/test.js"
     },
     "author": "",
-    "license": "MIT"
+    "license": "LGPL"
 }
