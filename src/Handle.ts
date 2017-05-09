@@ -44,28 +44,28 @@ export class Handle {
      * {@link Opcodes#H_INVOKESPECIAL}, {@link Opcodes#H_NEWINVOKESPECIAL} or
      * {@link Opcodes#H_INVOKEINTERFACE}.
      */
-    tag: number;
+    readonly tag: number;
 
     /**
      * The internal name of the class that owns the field or method designated
      * by this handle.
      */
-    owner: string;
+    readonly owner: string;
 
     /**
      * The name of the field or method designated by this handle.
      */
-    name: string;
+    readonly name: string;
 
     /**
      * The descriptor of the field or method designated by this handle.
      */
-    desc: string;
+    readonly descriptor: string;
 
     /**
      * Indicate if the owner is an interface or not.
      */
-    itf: boolean;
+    readonly isInterface: boolean;
 
     /**
      * Constructs a new field or method handle.
@@ -94,62 +94,8 @@ export class Handle {
         this.tag = tag;
         this.owner = owner;
         this.name = name;
-        this.desc = desc;
-        this.itf = itf;
-    }
-
-    /**
-     * Returns the kind of field or method designated by this handle.
-     * 
-     * @return {@link Opcodes#H_GETFIELD}, {@link Opcodes#H_GETSTATIC},
-     * {@link Opcodes#H_PUTFIELD}, {@link Opcodes#H_PUTSTATIC},
-     * {@link Opcodes#H_INVOKEVIRTUAL}, {@link Opcodes#H_INVOKESTATIC},
-     * {@link Opcodes#H_INVOKESPECIAL},
-     * {@link Opcodes#H_NEWINVOKESPECIAL} or
-     * {@link Opcodes#H_INVOKEINTERFACE}.
-     */
-    public getTag(): number {
-        return this.tag;
-    }
-
-    /**
-     * Returns the internal name of the class that owns the field or method
-     * designated by this handle.
-     * 
-     * @return the internal name of the class that owns the field or method
-     * designated by this handle.
-     */
-    public getOwner(): string {
-        return this.owner;
-    }
-
-    /**
-     * Returns the name of the field or method designated by this handle.
-     * 
-     * @return the name of the field or method designated by this handle.
-     */
-    public getName(): string {
-        return this.name;
-    }
-
-    /**
-     * Returns the descriptor of the field or method designated by this handle.
-     * 
-     * @return the descriptor of the field or method designated by this handle.
-     */
-    public getDesc(): string {
-        return this.desc;
-    }
-
-    /**
-     * Returns true if the owner of the field or method designated
-     * by this handle is an interface.
-     * 
-     * @return true if the owner of the field or method designated
-     * by this handle is an interface.
-     */
-    public isInterface(): boolean {
-        return this.itf;
+        this.descriptor = desc;
+        this.isInterface = itf;
     }
 
     public equals(obj: any): boolean {
@@ -160,11 +106,11 @@ export class Handle {
             return false;
         }
         let h: Handle = <Handle>obj;
-        return this.tag === h.tag && this.itf === h.itf && (this.owner === h.owner) && (this.name === h.name) && (this.desc === h.desc);
+        return this.tag === h.tag && this.isInterface === h.isInterface && (this.owner === h.owner) && (this.name === h.name) && (this.descriptor === h.descriptor);
     }
 
     public hashCode(): number {
-        return this.tag + (this.itf ? 64 : 0) + (<any>this.owner.toString()) * (<any>this.name.toString()) * (<any>this.desc.toString());
+        return this.tag + (this.isInterface ? 64 : 0) + (<any>this.owner.toString()) * (<any>this.name.toString()) * (<any>this.descriptor.toString());
     }
 
     /**
@@ -181,7 +127,7 @@ export class Handle {
      * . As this format is unambiguous, it can be parsed if necessary.
      */
     public toString(): string {
-        return this.owner + '.' + this.name + this.desc + " (" + this.tag + (this.itf ? " itf" : "") + ')';
+        return this.owner + '.' + this.name + this.descriptor + " (" + this.tag + (this.isInterface ? " itf" : "") + ')';
     }
 }
 Handle["__class"] = "Handle";

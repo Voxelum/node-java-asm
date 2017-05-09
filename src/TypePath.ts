@@ -87,13 +87,14 @@ export class TypePath {
     }
 
     /**
-     * Returns the length of this path.
-     * 
-     * @return the length of this path.
-     */
-    public getLength(): number {
+        * Returns the length of this path.
+        * 
+        * @return the length of this path.
+        */
+    get length(): number {
         return this.buf[this.offset];
     }
+
 
     /**
      * Returns the value of the given step of this path.
@@ -170,7 +171,7 @@ export class TypePath {
      * argument index in decimal form followed by ';'.
      */
     public toString(): string {
-        let length: number = this.getLength();
+        let length: number = this.length;
         let result: string;
         for (let i: number = 0; i < length; ++i) {
             switch ((this.getStep(i))) {

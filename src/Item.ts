@@ -35,7 +35,6 @@
  * @author Eric Bruneton
  */
 import { ClassWriter } from "./ClassWriter";
-import { WriterConstant } from './WriterConstant'
 import { floatToIntBits, doubleToLongBits } from './bits';
 import * as Long from 'long';
 export class Item {
@@ -195,15 +194,15 @@ export class Item {
         this.strVal2 = strVal2;
         this.strVal3 = strVal3;
         switch (type) {
-            case WriterConstant.CLASS:
+            case ClassWriter.CLASS:
                 this.intVal = 0;     // intVal of a class must be zero, see visitInnerClass
-            case WriterConstant.UTF8:
-            case WriterConstant.STR:
-            case WriterConstant.MTYPE:
-            case WriterConstant.TYPE_NORMAL:
+            case ClassWriter.UTF8:
+            case ClassWriter.STR:
+            case ClassWriter.MTYPE:
+            case ClassWriter.TYPE_NORMAL:
                 this.__hashCode = 0x7FFFFFFF & (type + str_hash(strVal1));
                 return;
-            case WriterConstant.NAME_TYPE: {
+            case ClassWriter.NAME_TYPE: {
                 this.__hashCode = 0x7FFFFFFF & (type + str_hash(strVal1)
                     * str_hash(strVal2));
                 return;

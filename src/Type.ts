@@ -41,118 +41,124 @@ export class Type {
     /**
     * The sort of the <tt>void</tt> type. See {@link #getSort getSort}.
     */
-    public static VOID: number = 0;
+    static readonly VOID: number = 0;
 
     /**
      * The sort of the <tt>boolean</tt> type. See {@link #getSort getSort}.
      */
-    public static BOOLEAN: number = 1;
+    static readonly BOOLEAN: number = 1;
 
     /**
      * The sort of the <tt>char</tt> type. See {@link #getSort getSort}.
      */
-    public static CHAR: number = 2;
+    static readonly CHAR: number = 2;
 
     /**
      * The sort of the <tt>byte</tt> type. See {@link #getSort getSort}.
      */
-    public static BYTE: number = 3;
+    static readonly BYTE: number = 3;
 
     /**
      * The sort of the <tt>short</tt> type. See {@link #getSort getSort}.
      */
-    public static SHORT: number = 4;
+    static readonly SHORT: number = 4;
 
     /**
      * The sort of the <tt>int</tt> type. See {@link #getSort getSort}.
      */
-    public static INT: number = 5;
+    static readonly INT: number = 5;
 
     /**
      * The sort of the <tt>float</tt> type. See {@link #getSort getSort}.
      */
-    public static FLOAT: number = 6;
+    static readonly FLOAT: number = 6;
 
     /**
      * The sort of the <tt>long</tt> type. See {@link #getSort getSort}.
      */
-    public static LONG: number = 7;
+    static readonly LONG: number = 7;
 
     /**
      * The sort of the <tt>double</tt> type. See {@link #getSort getSort}.
      */
-    public static DOUBLE: number = 8;
+    static readonly DOUBLE: number = 8;
 
     /**
      * The sort of array reference types. See {@link #getSort getSort}.
      */
-    public static ARRAY: number = 9;
+    static readonly ARRAY: number = 9;
 
     /**
      * The sort of object reference types. See {@link #getSort getSort}.
      */
-    public static OBJECT: number = 10;
+    static readonly OBJECT: number = 10;
 
     /**
      * The sort of method types. See {@link #getSort getSort}.
      */
-    public static METHOD: number = 11;
+    static readonly METHOD: number = 11;
 
     /**
      * The <tt>void</tt> type.
      */
-    public static VOID_TYPE: Type; public static VOID_TYPE_$LI$(): Type { if (Type.VOID_TYPE == null) Type.VOID_TYPE = new Type(Type.VOID, null, (('V').charCodeAt(0) << 24) | (5 << 16), 1); return Type.VOID_TYPE; };
+    static readonly VOID_TYPE: Type = new Type(Type.VOID, null, (('V').charCodeAt(0) << 24) | (5 << 16), 1);
 
     /**
      * The <tt>boolean</tt> type.
      */
-    public static BOOLEAN_TYPE: Type; public static BOOLEAN_TYPE_$LI$(): Type { if (Type.BOOLEAN_TYPE == null) Type.BOOLEAN_TYPE = new Type(Type.BOOLEAN, null, (('Z').charCodeAt(0) << 24) | (5 << 8) | 1, 1); return Type.BOOLEAN_TYPE; };
+    static readonly BOOLEAN_TYPE: Type = new Type(Type.BOOLEAN, null, (('Z').charCodeAt(0) << 24) | (5 << 8) | 1, 1);
 
     /**
      * The <tt>char</tt> type.
      */
-    public static CHAR_TYPE: Type; public static CHAR_TYPE_$LI$(): Type { if (Type.CHAR_TYPE == null) Type.CHAR_TYPE = new Type(Type.CHAR, null, (('C').charCodeAt(0) << 24) | (6 << 8) | 1, 1); return Type.CHAR_TYPE; };
+    static readonly CHAR_TYPE: Type = new Type(Type.CHAR, null, (('C').charCodeAt(0) << 24) | (6 << 8) | 1, 1);
 
     /**
      * The <tt>byte</tt> type.
      */
-    public static BYTE_TYPE: Type; public static BYTE_TYPE_$LI$(): Type { if (Type.BYTE_TYPE == null) Type.BYTE_TYPE = new Type(Type.BYTE, null, (('B').charCodeAt(0) << 24) | (5 << 8) | 1, 1); return Type.BYTE_TYPE; };
+    static readonly BYTE_TYPE: Type = new Type(Type.BYTE, null, (('B').charCodeAt(0) << 24) | (5 << 8) | 1, 1);
 
     /**
      * The <tt>short</tt> type.
      */
-    public static SHORT_TYPE: Type; public static SHORT_TYPE_$LI$(): Type { if (Type.SHORT_TYPE == null) Type.SHORT_TYPE = new Type(Type.SHORT, null, (('S').charCodeAt(0) << 24) | (7 << 8) | 1, 1); return Type.SHORT_TYPE; };
+    static readonly SHORT_TYPE: Type = new Type(Type.SHORT, null, (('S').charCodeAt(0) << 24) | (7 << 8) | 1, 1);
 
     /**
      * The <tt>int</tt> type.
      */
-    public static INT_TYPE: Type; public static INT_TYPE_$LI$(): Type { if (Type.INT_TYPE == null) Type.INT_TYPE = new Type(Type.INT, null, (('I').charCodeAt(0) << 24) | 1, 1); return Type.INT_TYPE; };
+    static readonly INT_TYPE: Type = new Type(Type.INT, null, (('I').charCodeAt(0) << 24) | 1, 1);
 
     /**
      * The <tt>float</tt> type.
      */
-    public static FLOAT_TYPE: Type; public static FLOAT_TYPE_$LI$(): Type { if (Type.FLOAT_TYPE == null) Type.FLOAT_TYPE = new Type(Type.FLOAT, null, (('F').charCodeAt(0) << 24) | (2 << 16) | (2 << 8) | 1, 1); return Type.FLOAT_TYPE; };
+    static readonly FLOAT_TYPE: Type = new Type(Type.FLOAT, null, (('F').charCodeAt(0) << 24) | (2 << 16) | (2 << 8) | 1, 1);
 
     /**
      * The <tt>long</tt> type.
      */
-    public static LONG_TYPE: Type; public static LONG_TYPE_$LI$(): Type { if (Type.LONG_TYPE == null) Type.LONG_TYPE = new Type(Type.LONG, null, (('J').charCodeAt(0) << 24) | (1 << 16) | (1 << 8) | 2, 1); return Type.LONG_TYPE; };
+    static readonly LONG_TYPE: Type = new Type(Type.LONG, null, (('J').charCodeAt(0) << 24) | (1 << 16) | (1 << 8) | 2, 1);
 
     /**
      * The <tt>double</tt> type.
      */
-    public static DOUBLE_TYPE: Type; public static DOUBLE_TYPE_$LI$(): Type { if (Type.DOUBLE_TYPE == null) Type.DOUBLE_TYPE = new Type(Type.DOUBLE, null, (('D').charCodeAt(0) << 24) | (3 << 16) | (3 << 8) | 2, 1); return Type.DOUBLE_TYPE; };
+    static readonly DOUBLE_TYPE: Type = new Type(Type.DOUBLE, null, (('D').charCodeAt(0) << 24) | (3 << 16) | (3 << 8) | 2, 1);
 
     /**
      * The sort of this Java type.
+     * 
+     * {@link #VOID VOID}, {@link #BOOLEAN BOOLEAN}, {@link #CHAR CHAR},
+     * {@link #BYTE BYTE}, {@link #SHORT SHORT}, {@link #INT INT},
+     * {@link #FLOAT FLOAT}, {@link #LONG LONG}, {@link #DOUBLE DOUBLE},
+     * {@link #ARRAY ARRAY}, {@link #OBJECT OBJECT} or {@link #METHOD
+     * METHOD}.
      */
-    private sort: number;
+    readonly sort: number;
 
     /**
      * A buffer containing the internal name of this Java type. This field is
      * only used for reference types.
      */
-    private buf: string[];
+    private buf: string;
 
     /**
      * The offset of the internal name of this Java type in {@link #buf buf} or,
@@ -175,7 +181,7 @@ export class Type {
      * @param off  the offset of this descriptor in the previous buffer.
      * @param len  the length of this descriptor.
      */
-    constructor(sort: number, buf: string[], off: number, len: number) {
+    constructor(sort: number, buf: string, off: number, len: number) {
         this.sort = 0;
         this.off = 0;
         this.len = 0;
@@ -186,24 +192,13 @@ export class Type {
     }
 
     /**
-     * Returns the Java type corresponding to the given type descriptor.
-     * 
-     * @param typeDescriptor a field or method type descriptor.
-     * @return the Java type corresponding to the given type descriptor.
-     */
-    public static getType$java_lang_String(typeDescriptor: string): Type {
-        return Type.getType(/* toCharArray */(typeDescriptor).split(''), 0);
-    }
-
-    /**
      * Returns the Java type corresponding to the given internal name.
      * 
      * @param internalName an internal name.
      * @return the Java type corresponding to the given internal name.
      */
-    public static getObjectType(internalName: string): Type {
-        let buf: string[] = /* toCharArray */(internalName).split('');
-        return new Type(buf[0] === '[' ? Type.ARRAY : Type.OBJECT, buf, 0, buf.length);
+    static getObjectType(internalName: string): Type {
+        return new Type(internalName[0] === '[' ? Type.ARRAY : Type.OBJECT, internalName, 0, internalName.length);
     }
 
     /**
@@ -213,8 +208,8 @@ export class Type {
      * @param methodDescriptor a method descriptor.
      * @return the Java type corresponding to the given method descriptor.
      */
-    public static getMethodType(methodDescriptor: string): Type {
-        return Type.getType(/* toCharArray */(methodDescriptor).split(''), 0);
+    static getMethodType(methodDescriptor: string): Type {
+        return Type.getType(methodDescriptor, 0);
     }
 
     /**
@@ -225,16 +220,15 @@ export class Type {
      * @return the Java types corresponding to the argument types of the given
      * method descriptor.
      */
-    public static getArgumentTypes(methodDescriptor: string): Type[] {
-        let buf: string[] = /* toCharArray */(methodDescriptor).split('');
+    static getArgumentTypes(methodDescriptor: string): Type[] {
         let off: number = 1;
         let size: number = 0;
         while ((true)) {
-            let car: string = buf[off++];
+            let car: string = methodDescriptor[off++];
             if (car === ')') {
                 break;
             } else if (car === 'L') {
-                while ((buf[off++] !== ';')) {
+                while ((methodDescriptor[off++] !== ';')) {
                 };
                 ++size;
             } else if (car !== '[') {
@@ -244,8 +238,8 @@ export class Type {
         let args: Type[] = new Array(size);
         off = 1;
         size = 0;
-        while ((buf[off] !== ')')) {
-            args[size] = Type.getType(buf, off);
+        while ((methodDescriptor[off] !== ')')) {
+            args[size] = Type.getType(methodDescriptor, off);
             off += args[size].len + (args[size].sort === Type.OBJECT ? 2 : 0);
             size += 1;
         };
@@ -262,7 +256,7 @@ export class Type {
      * <tt>(argSize &lt;&lt; 2) | retSize</tt> (argSize is therefore equal to
      * <tt>i &gt;&gt; 2</tt>, and retSize to <tt>i &amp; 0x03</tt>).
      */
-    public static getArgumentsAndReturnSizes(desc: string): number {
+    static getArgumentsAndReturnSizes(desc: string): number {
         let n: number = 1;
         let c: number = 1;
         while ((true)) {
@@ -298,80 +292,61 @@ export class Type {
      * @param off the offset of this descriptor in the previous buffer.
      * @return the Java type corresponding to the given type descriptor.
      */
-    public static getType(buf?: any, off?: any): any {
-        if (((buf != null && buf instanceof Array) || buf === null) && ((typeof off === 'number') || off === null)) {
-            let __args = Array.prototype.slice.call(arguments);
-            return <any>(() => {
-                let len: number;
-                switch ((buf[off])) {
-                    case 'V':
-                        return Type.VOID_TYPE_$LI$();
-                    case 'Z':
-                        return Type.BOOLEAN_TYPE_$LI$();
-                    case 'C':
-                        return Type.CHAR_TYPE_$LI$();
-                    case 'B':
-                        return Type.BYTE_TYPE_$LI$();
-                    case 'S':
-                        return Type.SHORT_TYPE_$LI$();
-                    case 'I':
-                        return Type.INT_TYPE_$LI$();
-                    case 'F':
-                        return Type.FLOAT_TYPE_$LI$();
-                    case 'J':
-                        return Type.LONG_TYPE_$LI$();
-                    case 'D':
-                        return Type.DOUBLE_TYPE_$LI$();
-                    case '[':
-                        len = 1;
-                        while ((buf[off + len] === '[')) {
-                            ++len;
-                        };
-                        if (buf[off + len] === 'L') {
-                            ++len;
-                            while ((buf[off + len] !== ';')) {
-                                ++len;
-                            };
-                        }
-                        return new Type(Type.ARRAY, buf, off, len + 1);
-                    case 'L':
-                        len = 1;
-                        while ((buf[off + len] !== ';')) {
-                            ++len;
-                        };
-                        return new Type(Type.OBJECT, buf, off + 1, len - 1);
-                    default:
-                        return new Type(Type.METHOD, buf, off, buf.length - off);
+    static getType(str: string, off: number = 0): Type {
+        let len: number;
+        let buf = ''.concat(str);
+        switch (buf[off]) {
+            case 'V':
+                return Type.VOID_TYPE;
+            case 'Z':
+                return Type.BOOLEAN_TYPE;
+            case 'C':
+                return Type.CHAR_TYPE;
+            case 'B':
+                return Type.BYTE_TYPE;
+            case 'S':
+                return Type.SHORT_TYPE;
+            case 'I':
+                return Type.INT_TYPE;
+            case 'F':
+                return Type.FLOAT_TYPE;
+            case 'J':
+                return Type.LONG_TYPE;
+            case 'D':
+                return Type.DOUBLE_TYPE;
+            case '[':
+                len = 1;
+                while ((buf[off + len] === '[')) {
+                    ++len;
+                };
+                if (buf[off + len] === 'L') {
+                    ++len;
+                    while ((buf[off + len] !== ';')) {
+                        ++len;
+                    };
                 }
-            })();
-        } else if (((typeof buf === 'string') || buf === null) && off === undefined) {
-            return <any>Type.getType$java_lang_String(buf);
-        } else throw new Error('invalid overload');
+                return new Type(Type.ARRAY, buf, off, len + 1);
+            case 'L':
+                len = 1;
+                while ((buf[off + len] !== ';')) {
+                    ++len;
+                };
+                return new Type(Type.OBJECT, buf, off + 1, len - 1);
+            default:
+                return new Type(Type.METHOD, buf, off, buf.length - off);
+        }
     }
 
     /**
-     * Returns the sort of this Java type.
-     * 
-     * @return {@link #VOID VOID}, {@link #BOOLEAN BOOLEAN}, {@link #CHAR CHAR},
-     * {@link #BYTE BYTE}, {@link #SHORT SHORT}, {@link #INT INT},
-     * {@link #FLOAT FLOAT}, {@link #LONG LONG}, {@link #DOUBLE DOUBLE},
-     * {@link #ARRAY ARRAY}, {@link #OBJECT OBJECT} or {@link #METHOD
-     * METHOD}.
-     */
-    public getSort(): number {
-        return this.sort;
-    }
-
-    /**
-     * Returns the internal name of the class corresponding to this object or
-     * array type. The internal name of a class is its fully qualified name (as
-     * returned by Class.getName(), where '.' are replaced by '/'. This method
-     * should only be used for an object or array type.
-     * 
-     * @return the internal name of the class corresponding to this object type.
-     */
-    public getInternalName(): string {
-        return <string>((str, index, len) => str.substring(index, index + len))((this.buf).join(''), this.off, this.len);
+       * Returns the internal name of the class corresponding to this object or
+       * array type. The internal name of a class is its fully qualified name (as
+       * returned by Class.getName(), where '.' are replaced by '/'. This method
+       * should only be used for an object or array type.
+       * 
+       * @return the internal name of the class corresponding to this object type.
+       */
+    get internalName(): string {
+        return this.buf.substr(this.off, this.len);
     }
 
     /**
@@ -380,7 +355,7 @@ export class Type {
      * 
      * @param buf the string buffer to which the descriptor must be appended.
      */
-    public getDescriptor(buf: any = ''): any {
+    getDescriptor(buf: any = ''): any {
         if (this.sort == Type.OBJECT) {
             buf += ('L');
             for (let i = 0; i < this.len; i++) {
@@ -398,13 +373,13 @@ export class Type {
     }
 
     /**
-     * Returns the size of values of this type. This method must not be used for
-     * method types.
-     * 
-     * @return the size of values of this type, i.e., 2 for <tt>long</tt> and
-     * <tt>double</tt>, 0 for <tt>void</tt> and 1 otherwise.
-     */
-    public getSize(): number {
+        * Returns the size of values of this type. This method must not be used for
+        * method types.
+        * 
+        * @return the size of values of this type, i.e., 2 for <tt>long</tt> and
+        * <tt>double</tt>, 0 for <tt>void</tt> and 1 otherwise.
+        */
+    get size(): number {
         return this.buf == null ? (this.off & 255) : 1;
     }
 
@@ -414,7 +389,7 @@ export class Type {
      * @param o the object to be compared to this type.
      * @return <tt>true</tt> if the given object is equal to this type.
      */
-    public equals(o: any): boolean {
+    equals(o: any): boolean {
         if (this === o) {
             return true;
         }
@@ -443,7 +418,7 @@ export class Type {
      * 
      * @return a hash code value for this type.
      */
-    public hashCode(): number {
+    hashCode(): number {
         let hc: number = 13 * this.sort;
         if (this.sort >= Type.ARRAY) {
             for (let i: number = this.off, end: number = i + this.len; i < end; i++) {
@@ -458,30 +433,9 @@ export class Type {
      * 
      * @return the descriptor of this type.
      */
-    public toString(): string {
+    toString(): string {
         return this.getDescriptor();
     }
 }
 Type["__class"] = "Type";
-
-
-
-
-Type.DOUBLE_TYPE_$LI$();
-
-Type.LONG_TYPE_$LI$();
-
-Type.FLOAT_TYPE_$LI$();
-
-Type.INT_TYPE_$LI$();
-
-Type.SHORT_TYPE_$LI$();
-
-Type.BYTE_TYPE_$LI$();
-
-Type.CHAR_TYPE_$LI$();
-
-Type.BOOLEAN_TYPE_$LI$();
-
-Type.VOID_TYPE_$LI$();
 

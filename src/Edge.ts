@@ -38,7 +38,7 @@ export class Edge {
     /**
      * Denotes a normal control flow graph edge.
      */
-    static NORMAL: number = 0;
+    static readonly NORMAL: number = 0;
 
     /**
      * Denotes a control flow graph edge corresponding to an exception handler.
@@ -47,7 +47,7 @@ export class Edge {
      * the index, in the {@link ClassWriter} type table, of the exception that
      * is catched.
      */
-    static EXCEPTION: number = 2147483647;
+    static readonly EXCEPTION: number = 2147483647;
 
     /**
      * Information about this control flow graph edge. If

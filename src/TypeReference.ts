@@ -42,138 +42,138 @@ export class TypeReference {
      * The sort of type references that target a type parameter of a generic
      * class. See {@link #getSort getSort}.
      */
-    public static CLASS_TYPE_PARAMETER : number = 0;
+    static readonly CLASS_TYPE_PARAMETER: number = 0;
 
     /**
      * The sort of type references that target a type parameter of a generic
      * method. See {@link #getSort getSort}.
      */
-    public static METHOD_TYPE_PARAMETER : number = 1;
+    static readonly METHOD_TYPE_PARAMETER: number = 1;
 
     /**
      * The sort of type references that target the super class of a class or one
      * of the interfaces it implements. See {@link #getSort getSort}.
      */
-    public static CLASS_EXTENDS : number = 16;
+    static readonly CLASS_EXTENDS: number = 16;
 
     /**
      * The sort of type references that target a bound of a type parameter of a
      * generic class. See {@link #getSort getSort}.
      */
-    public static CLASS_TYPE_PARAMETER_BOUND : number = 17;
+    static readonly CLASS_TYPE_PARAMETER_BOUND: number = 17;
 
     /**
      * The sort of type references that target a bound of a type parameter of a
      * generic method. See {@link #getSort getSort}.
      */
-    public static METHOD_TYPE_PARAMETER_BOUND : number = 18;
+    static readonly METHOD_TYPE_PARAMETER_BOUND: number = 18;
 
     /**
      * The sort of type references that target the type of a field. See
      * {@link #getSort getSort}.
      */
-    public static FIELD : number = 19;
+    static readonly FIELD: number = 19;
 
     /**
      * The sort of type references that target the return type of a method. See
      * {@link #getSort getSort}.
      */
-    public static METHOD_RETURN : number = 20;
+    static readonly METHOD_RETURN: number = 20;
 
     /**
      * The sort of type references that target the receiver type of a method.
      * See {@link #getSort getSort}.
      */
-    public static METHOD_RECEIVER : number = 21;
+    static readonly METHOD_RECEIVER: number = 21;
 
     /**
      * The sort of type references that target the type of a formal parameter of
      * a method. See {@link #getSort getSort}.
      */
-    public static METHOD_FORMAL_PARAMETER : number = 22;
+    static readonly METHOD_FORMAL_PARAMETER: number = 22;
 
     /**
      * The sort of type references that target the type of an exception declared
      * in the throws clause of a method. See {@link #getSort getSort}.
      */
-    public static THROWS : number = 23;
+    static readonly THROWS: number = 23;
 
     /**
      * The sort of type references that target the type of a local variable in a
      * method. See {@link #getSort getSort}.
      */
-    public static LOCAL_VARIABLE : number = 64;
+    static readonly LOCAL_VARIABLE: number = 64;
 
     /**
      * The sort of type references that target the type of a resource variable
      * in a method. See {@link #getSort getSort}.
      */
-    public static RESOURCE_VARIABLE : number = 65;
+    static readonly RESOURCE_VARIABLE: number = 65;
 
     /**
      * The sort of type references that target the type of the exception of a
      * 'catch' clause in a method. See {@link #getSort getSort}.
      */
-    public static EXCEPTION_PARAMETER : number = 66;
+    static readonly EXCEPTION_PARAMETER: number = 66;
 
     /**
      * The sort of type references that target the type declared in an
      * 'instanceof' instruction. See {@link #getSort getSort}.
      */
-    public static INSTANCEOF : number = 67;
+    static readonly INSTANCEOF: number = 67;
 
     /**
      * The sort of type references that target the type of the object created by
      * a 'new' instruction. See {@link #getSort getSort}.
      */
-    public static NEW : number = 68;
+    static readonly NEW: number = 68;
 
     /**
      * The sort of type references that target the receiver type of a
      * constructor reference. See {@link #getSort getSort}.
      */
-    public static CONSTRUCTOR_REFERENCE : number = 69;
+    static readonly CONSTRUCTOR_REFERENCE: number = 69;
 
     /**
      * The sort of type references that target the receiver type of a method
      * reference. See {@link #getSort getSort}.
      */
-    public static METHOD_REFERENCE : number = 70;
+    static readonly METHOD_REFERENCE: number = 70;
 
     /**
      * The sort of type references that target the type declared in an explicit
      * or implicit cast instruction. See {@link #getSort getSort}.
      */
-    public static CAST : number = 71;
+    static readonly CAST: number = 71;
 
     /**
      * The sort of type references that target a type parameter of a generic
      * constructor in a constructor call. See {@link #getSort getSort}.
      */
-    public static CONSTRUCTOR_INVOCATION_TYPE_ARGUMENT : number = 72;
+    static readonly CONSTRUCTOR_INVOCATION_TYPE_ARGUMENT: number = 72;
 
     /**
      * The sort of type references that target a type parameter of a generic
      * method in a method call. See {@link #getSort getSort}.
      */
-    public static METHOD_INVOCATION_TYPE_ARGUMENT : number = 73;
+    static readonly METHOD_INVOCATION_TYPE_ARGUMENT: number = 73;
 
     /**
      * The sort of type references that target a type parameter of a generic
      * constructor in a constructor reference. See {@link #getSort getSort}.
      */
-    public static CONSTRUCTOR_REFERENCE_TYPE_ARGUMENT : number = 74;
+    static readonly CONSTRUCTOR_REFERENCE_TYPE_ARGUMENT: number = 74;
 
     /**
      * The sort of type references that target a type parameter of a generic
      * method in a method reference. See {@link #getSort getSort}.
      */
-    public static METHOD_REFERENCE_TYPE_ARGUMENT : number = 75;
+    static readonly METHOD_REFERENCE_TYPE_ARGUMENT: number = 75;
 
     /**
      * The type reference value in Java class file format.
      */
-    private value : number;
+    private value: number;
 
     /**
      * Creates a new TypeReference.
@@ -183,7 +183,7 @@ export class TypeReference {
      * visit method related to type annotations, like
      * visitTypeAnnotation.
      */
-    public constructor(typeRef : number) {
+    constructor(typeRef: number) {
         this.value = 0;
         this.value = typeRef;
     }
@@ -201,7 +201,7 @@ export class TypeReference {
      * {@link #METHOD_REFERENCE METHOD_REFERENCE}.
      * @return a type reference of the given sort.
      */
-    public static newTypeReference(sort : number) : TypeReference {
+    static newTypeReference(sort: number): TypeReference {
         return new TypeReference(sort << 24);
     }
 
@@ -215,7 +215,7 @@ export class TypeReference {
      * the type parameter index.
      * @return a reference to the given generic class or method type parameter.
      */
-    public static newTypeParameterReference(sort : number, paramIndex : number) : TypeReference {
+    static newTypeParameterReference(sort: number, paramIndex: number): TypeReference {
         return new TypeReference((sort << 24) | (paramIndex << 16));
     }
 
@@ -233,7 +233,7 @@ export class TypeReference {
      * @return a reference to the given generic class or method type parameter
      * bound.
      */
-    public static newTypeParameterBoundReference(sort : number, paramIndex : number, boundIndex : number) : TypeReference {
+    static newTypeParameterBoundReference(sort: number, paramIndex: number, boundIndex: number): TypeReference {
         return new TypeReference((sort << 24) | (paramIndex << 16) | (boundIndex << 8));
     }
 
@@ -246,7 +246,7 @@ export class TypeReference {
      * class, or -1 to reference the super class of the class.
      * @return a reference to the given super type of a class.
      */
-    public static newSuperTypeReference(itfIndex : number) : TypeReference {
+    static newSuperTypeReference(itfIndex: number): TypeReference {
         itfIndex &= 65535;
         return new TypeReference((TypeReference.CLASS_EXTENDS << 24) | (itfIndex << 8));
     }
@@ -259,7 +259,7 @@ export class TypeReference {
      * 
      * @return a reference to the type of the given method formal parameter.
      */
-    public static newFormalParameterReference(paramIndex : number) : TypeReference {
+    static newFormalParameterReference(paramIndex: number): TypeReference {
         return new TypeReference((TypeReference.METHOD_FORMAL_PARAMETER << 24) | (paramIndex << 16));
     }
 
@@ -272,7 +272,7 @@ export class TypeReference {
      * 
      * @return a reference to the type of the given exception.
      */
-    public static newExceptionReference(exceptionIndex : number) : TypeReference {
+    static newExceptionReference(exceptionIndex: number): TypeReference {
         return new TypeReference((TypeReference.THROWS << 24) | (exceptionIndex << 8));
     }
 
@@ -286,7 +286,7 @@ export class TypeReference {
      * 
      * @return a reference to the type of the given exception.
      */
-    public static newTryCatchReference(tryCatchBlockIndex : number) : TypeReference {
+    static newTryCatchReference(tryCatchBlockIndex: number): TypeReference {
         return new TypeReference((TypeReference.EXCEPTION_PARAMETER << 24) | (tryCatchBlockIndex << 8));
     }
 
@@ -309,7 +309,7 @@ export class TypeReference {
      * 
      * @return a reference to the type of the given type argument.
      */
-    public static newTypeArgumentReference(sort : number, argIndex : number) : TypeReference {
+    static newTypeArgumentReference(sort: number, argIndex: number): TypeReference {
         return new TypeReference((sort << 24) | argIndex);
     }
 
@@ -339,7 +339,7 @@ export class TypeReference {
      * {@link #METHOD_REFERENCE_TYPE_ARGUMENT
      * METHOD_REFERENCE_TYPE_ARGUMENT}.
      */
-    public getSort() : number {
+    getSort(): number {
         return this.value >>> 24;
     }
 
@@ -353,7 +353,7 @@ export class TypeReference {
      * 
      * @return a type parameter index.
      */
-    public getTypeParameterIndex() : number {
+    getTypeParameterIndex(): number {
         return (this.value & 16711680) >> 16;
     }
 
@@ -366,7 +366,7 @@ export class TypeReference {
      * 
      * @return a type parameter bound index.
      */
-    public getTypeParameterBoundIndex() : number {
+    getTypeParameterBoundIndex(): number {
         return (this.value & 65280) >> 8;
     }
 
@@ -379,8 +379,8 @@ export class TypeReference {
      * or -1 if this type reference references the type of the super
      * class.
      */
-    public getSuperTypeIndex() : number {
-        return (<number>((this.value & 16776960) >> 8)|0);
+    getSuperTypeIndex(): number {
+        return (<number>((this.value & 16776960) >> 8) | 0);
     }
 
     /**
@@ -390,7 +390,7 @@ export class TypeReference {
      * 
      * @return a formal parameter index.
      */
-    public getFormalParameterIndex() : number {
+    getFormalParameterIndex(): number {
         return (this.value & 16711680) >> 16;
     }
 
@@ -401,7 +401,7 @@ export class TypeReference {
      * 
      * @return the index of an exception in the 'throws' clause of a method.
      */
-    public getExceptionIndex() : number {
+    getExceptionIndex(): number {
         return (this.value & 16776960) >> 8;
     }
 
@@ -413,7 +413,7 @@ export class TypeReference {
      * 
      * @return the index of an exception in the 'throws' clause of a method.
      */
-    public getTryCatchBlockIndex() : number {
+    getTryCatchBlockIndex(): number {
         return (this.value & 16776960) >> 8;
     }
 
@@ -429,7 +429,7 @@ export class TypeReference {
      * 
      * @return a type parameter index.
      */
-    public getTypeArgumentIndex() : number {
+    getTypeArgumentIndex(): number {
         return this.value & 255;
     }
 
@@ -439,7 +439,7 @@ export class TypeReference {
      * 
      * @return the int encoded value of this type reference.
      */
-    public getValue() : number {
+    getValue(): number {
         return this.value;
     }
 }
