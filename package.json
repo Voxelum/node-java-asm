@@ -13,7 +13,8 @@
         "typescript": "^2.3.2"
     },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "build": "tsc",
+        "test": "tsc && node ./build/test.js"
     },
     "author": "",
     "license": "MIT"

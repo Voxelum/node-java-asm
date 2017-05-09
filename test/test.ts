@@ -1,4 +1,4 @@
-import { ClassReader, ClassVisitor, Opcodes, AnnotationVisitor } from './src/asm'
+import { ClassReader, ClassVisitor, Opcodes, AnnotationVisitor } from '../src/asm'
 import * as fs from 'fs';
 
 class AVisitor extends AnnotationVisitor {
