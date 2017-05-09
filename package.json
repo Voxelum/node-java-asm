@@ -16,5 +16,5 @@
         "test": "tsc && node ./build/test.js"
     },
     "author": "",
-    "license": "LGPL"
+    "license": "BSD 3-clause License"
 }
