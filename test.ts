@@ -1,4 +1,4 @@
-import { ClassReader, ClassVisitor, Opcodes, AnnotationVisitor } from './asm'
+import { ClassReader, ClassVisitor, Opcodes, AnnotationVisitor } from './src/asm'
 import * as fs from 'fs';
 
 class AVisitor extends AnnotationVisitor {
@@ -9,7 +9,6 @@ class AVisitor extends AnnotationVisitor {
     public visit(s: string, o: any) {
         console.log(s + ' ' + o);
     }
-
 }
 class AnnoVisitor extends ClassVisitor {
     public constructor() {

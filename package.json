@@ -1,17 +1,20 @@
 {
     "name": "asm-js",
-    "version": "1.0.0",
-    "description": "",
+    "version": "0.0.1",
+    "description": "The migration of the Java ASM framework",
     "main": "./build/asm.js",
     "dependencies": {
         "@types/node": "7.0.18",
+        "@types/long": "3.0.31",
         "number-util": "1.0.3",
-        "long": "^3.2.0",
-        "@types/long": "3.0.31"
+        "long": "^3.2.0"
+    },
+    "devDependencies": {
+        "typescript": "^2.3.2"
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
-    "license": "ISC"
+    "license": "MIT"
 }
