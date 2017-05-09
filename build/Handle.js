@@ -32,37 +32,12 @@ class Handle {
      * @param itf
      * true if the owner is an interface.
      */
-    constructor(tag, owner, name, desc, itf) {
-        if (((typeof tag === 'number') || tag === null) && ((typeof owner === 'string') || owner === null) && ((typeof name === 'string') || name === null) && ((typeof desc === 'string') || desc === null) && ((typeof itf === 'boolean') || itf === null)) {
-            let __args = Array.prototype.slice.call(arguments);
-            this.tag = 0;
-            this.itf = false;
-            (() => {
-                this.tag = tag;
-                this.owner = owner;
-                this.name = name;
-                this.desc = desc;
-                this.itf = itf;
-            })();
-        }
-        else if (((typeof tag === 'number') || tag === null) && ((typeof owner === 'string') || owner === null) && ((typeof name === 'string') || name === null) && ((typeof desc === 'string') || desc === null) && itf === undefined) {
-            let __args = Array.prototype.slice.call(arguments);
-            {
-                let __args = Array.prototype.slice.call(arguments);
-                let itf = __args[0] === Opcodes_1.Opcodes.H_INVOKEINTERFACE;
-                this.tag = 0;
-                this.itf = false;
-                (() => {
-                    this.tag = tag;
-                    this.owner = owner;
-                    this.name = name;
-                    this.desc = desc;
-                    this.itf = itf;
-                })();
-            }
-        }
-        else
-            throw new Error('invalid overload');
+    constructor(tag, owner, name, desc, itf = tag == Opcodes_1.Opcodes.H_INVOKEINTERFACE) {
+        this.tag = tag;
+        this.owner = owner;
+        this.name = name;
+        this.desc = desc;
+        this.itf = itf;
     }
     /**
      * Returns the kind of field or method designated by this handle.

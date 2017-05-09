@@ -22,7 +22,6 @@ import { MethodVisitor } from './MethodVisitor'
 import { MethodWriter } from './MethodWriter'
 import { Opcodes } from './Opcodes'
 import { Type } from './Type'
-import { WriterConstant } from './WriterConstant'
 import { TypePath } from './TypePath'
 
 import * as Long from 'long'
@@ -74,7 +73,7 @@ export class ClassReader {
      * Flag to skip the stack map frames in the class. If this flag is set the
      * stack map frames of the class is not visited, i.e. the
      * {@link MethodVisitor#visitFrame visitFrame} method will not be called.
-     * This flag is useful when the {@link WriterConstant#COMPUTE_FRAMES} option is
+     * This flag is useful when the {@link ClassWriter#COMPUTE_FRAMES} option is
      * used: it avoids visiting frames that will be ignored and recomputed from
      * scratch in the class writer.
      */
@@ -162,27 +161,27 @@ export class ClassReader {
             this.items[i] = index + 1;
             let size: number;
             switch ((buffer[index])) {
-                case WriterConstant.FIELD:
-                case WriterConstant.METH:
-                case WriterConstant.IMETH:
-                case WriterConstant.INT:
-                case WriterConstant.FLOAT:
-                case WriterConstant.NAME_TYPE:
-                case WriterConstant.INDY:
+                case ClassWriter.FIELD:
+                case ClassWriter.METH:
+                case ClassWriter.IMETH:
+                case ClassWriter.INT:
+                case ClassWriter.FLOAT:
+                case ClassWriter.NAME_TYPE:
+                case ClassWriter.INDY:
                     size = 5;
                     break;
-                case WriterConstant.LONG:
-                case WriterConstant.DOUBLE:
+                case ClassWriter.LONG:
+                case ClassWriter.DOUBLE:
                     size = 9;
                     ++i;
                     break;
-                case WriterConstant.UTF8:
+                case ClassWriter.UTF8:
                     size = 3 + this.readUnsignedShort(index + 1);
                     if (size > max) {
                         max = size;
                     }
                     break;
-                case WriterConstant.HANDLE:
+                case ClassWriter.HANDLE:
                     size = 4;
                     break;
                 default:
@@ -322,7 +321,7 @@ export class ClassReader {
             } else if (("Deprecated" === attrName)) {
                 access |= Opcodes.ACC_DEPRECATED;
             } else if (("Synthetic" === attrName)) {
-                access |= Opcodes.ACC_SYNTHETIC | WriterConstant.ACC_SYNTHETIC_ATTRIBUTE;
+                access |= Opcodes.ACC_SYNTHETIC | ClassWriter.ACC_SYNTHETIC_ATTRIBUTE;
             } else if (("SourceDebugExtension" === attrName)) {
                 let len: number = this.readInt(u + 4);
                 sourceDebug = this.readUTF(u + 8, len, new Array(len));
@@ -430,7 +429,7 @@ export class ClassReader {
             } else if (("Deprecated" === attrName)) {
                 access |= Opcodes.ACC_DEPRECATED;
             } else if (("Synthetic" === attrName)) {
-                access |= Opcodes.ACC_SYNTHETIC | WriterConstant.ACC_SYNTHETIC_ATTRIBUTE;
+                access |= Opcodes.ACC_SYNTHETIC | ClassWriter.ACC_SYNTHETIC_ATTRIBUTE;
             } else if (ClassReader.ANNOTATIONS && ("RuntimeVisibleAnnotations" === attrName)) {
                 anns = u + 8;
             } else if (ClassReader.ANNOTATIONS && ("RuntimeVisibleTypeAnnotations" === attrName)) {
@@ -537,7 +536,7 @@ export class ClassReader {
             } else if (ClassReader.ANNOTATIONS && ("AnnotationDefault" === attrName)) {
                 dann = u + 8;
             } else if (("Synthetic" === attrName)) {
-                context.access |= Opcodes.ACC_SYNTHETIC | WriterConstant.ACC_SYNTHETIC_ATTRIBUTE;
+                context.access |= Opcodes.ACC_SYNTHETIC | ClassWriter.ACC_SYNTHETIC_ATTRIBUTE;
             } else if (ClassReader.ANNOTATIONS && ("RuntimeInvisibleAnnotations" === attrName)) {
                 ianns = u + 8;
             } else if (ClassReader.ANNOTATIONS && ("RuntimeInvisibleTypeAnnotations" === attrName)) {
@@ -660,24 +659,24 @@ export class ClassReader {
         while ((u < codeEnd)) {
             let offset: number = u - codeStart;
             let opcode: number = b[u] & 255;
-            switch ((WriterConstant.TYPE[opcode])) {
-                case WriterConstant.NOARG_INSN:
-                case WriterConstant.IMPLVAR_INSN:
+            switch ((ClassWriter.TYPE[opcode])) {
+                case ClassWriter.NOARG_INSN:
+                case ClassWriter.IMPLVAR_INSN:
                     u += 1;
                     break;
-                case WriterConstant.LABEL_INSN:
+                case ClassWriter.LABEL_INSN:
                     this.readLabel(offset + this.readShort(u + 1), labels);
                     u += 3;
                     break;
-                case WriterConstant.ASM_LABEL_INSN:
+                case ClassWriter.ASM_LABEL_INSN:
                     this.readLabel(offset + this.readUnsignedShort(u + 1), labels);
                     u += 3;
                     break;
-                case WriterConstant.LABELW_INSN:
+                case ClassWriter.LABELW_INSN:
                     this.readLabel(offset + this.readInt(u + 1), labels);
                     u += 5;
                     break;
-                case WriterConstant.WIDE_INSN:
+                case ClassWriter.WIDE_INSN:
                     opcode = b[u + 1] & 255;
                     if (opcode === Opcodes.IINC) {
                         u += 6;
@@ -685,7 +684,7 @@ export class ClassReader {
                         u += 4;
                     }
                     break;
-                case WriterConstant.TABL_INSN:
+                case ClassWriter.TABL_INSN:
                     u = u + 4 - (offset & 3);
                     this.readLabel(offset + this.readInt(u), labels);
                     for (let i: number = this.readInt(u + 8) - this.readInt(u + 4) + 1; i > 0; --i) {
@@ -694,7 +693,7 @@ export class ClassReader {
                     }
                     u += 12;
                     break;
-                case WriterConstant.LOOK_INSN:
+                case ClassWriter.LOOK_INSN:
                     u = u + 4 - (offset & 3);
                     this.readLabel(offset + this.readInt(u), labels);
                     for (let i: number = this.readInt(u + 4); i > 0; --i) {
@@ -703,20 +702,20 @@ export class ClassReader {
                     }
                     u += 8;
                     break;
-                case WriterConstant.VAR_INSN:
-                case WriterConstant.SBYTE_INSN:
-                case WriterConstant.LDC_INSN:
+                case ClassWriter.VAR_INSN:
+                case ClassWriter.SBYTE_INSN:
+                case ClassWriter.LDC_INSN:
                     u += 2;
                     break;
-                case WriterConstant.SHORT_INSN:
-                case WriterConstant.LDCW_INSN:
-                case WriterConstant.FIELDORMETH_INSN:
-                case WriterConstant.TYPE_INSN:
-                case WriterConstant.IINC_INSN:
+                case ClassWriter.SHORT_INSN:
+                case ClassWriter.LDCW_INSN:
+                case ClassWriter.FIELDORMETH_INSN:
+                case ClassWriter.TYPE_INSN:
+                case ClassWriter.IINC_INSN:
                     u += 3;
                     break;
-                case WriterConstant.ITFMETH_INSN:
-                case WriterConstant.INDYMETH_INSN:
+                case ClassWriter.ITFMETH_INSN:
+                case ClassWriter.INDYMETH_INSN:
                     u += 5;
                     break;
                 default:
@@ -877,12 +876,12 @@ export class ClassReader {
                 }
             };
             let opcode: number = b[u] & 255;
-            switch ((WriterConstant.TYPE[opcode])) {
-                case WriterConstant.NOARG_INSN:
+            switch ((ClassWriter.TYPE[opcode])) {
+                case ClassWriter.NOARG_INSN:
                     mv.visitInsn(opcode);
                     u += 1;
                     break;
-                case WriterConstant.IMPLVAR_INSN:
+                case ClassWriter.IMPLVAR_INSN:
                     if (opcode > Opcodes.ISTORE) {
                         opcode -= 59;
                         mv.visitVarInsn(Opcodes.ISTORE + (opcode >> 2), opcode & 3);
@@ -892,15 +891,15 @@ export class ClassReader {
                     }
                     u += 1;
                     break;
-                case WriterConstant.LABEL_INSN:
+                case ClassWriter.LABEL_INSN:
                     mv.visitJumpInsn(opcode, labels[offset + this.readShort(u + 1)]);
                     u += 3;
                     break;
-                case WriterConstant.LABELW_INSN:
+                case ClassWriter.LABELW_INSN:
                     mv.visitJumpInsn(opcode + opcodeDelta, labels[offset + this.readInt(u + 1)]);
                     u += 5;
                     break;
-                case WriterConstant.ASM_LABEL_INSN:
+                case ClassWriter.ASM_LABEL_INSN:
                     {
                         opcode = opcode < 218 ? opcode - 49 : opcode - 20;
                         let target: Label = labels[offset + this.readUnsignedShort(u + 1)];
@@ -913,13 +912,13 @@ export class ClassReader {
                             mv.visitJumpInsn(200, target);
                             mv.visitLabel(endif);
                             if (ClassReader.FRAMES && stackMap !== 0 && (frame == null || frame.offset !== offset + 3)) {
-                                mv.visitFrame(WriterConstant.F_INSERT, 0, null, 0, null);
+                                mv.visitFrame(ClassWriter.F_INSERT, 0, null, 0, null);
                             }
                         }
                         u += 3;
                         break;
                     };
-                case WriterConstant.WIDE_INSN:
+                case ClassWriter.WIDE_INSN:
                     opcode = b[u + 1] & 255;
                     if (opcode === Opcodes.IINC) {
                         mv.visitIincInsn(this.readUnsignedShort(u + 2), this.readShort(u + 4));
@@ -929,7 +928,7 @@ export class ClassReader {
                         u += 4;
                     }
                     break;
-                case WriterConstant.TABL_INSN:
+                case ClassWriter.TABL_INSN:
                     {
                         u = u + 4 - (offset & 3);
                         let label: number = offset + this.readInt(u);
@@ -944,7 +943,7 @@ export class ClassReader {
                         (this['__jswref_0'] = mv).visitTableSwitchInsn.apply(this['__jswref_0'], [min, max, labels[label]].concat(<any[]>table));
                         break;
                     };
-                case WriterConstant.LOOK_INSN:
+                case ClassWriter.LOOK_INSN:
                     {
                         u = u + 4 - (offset & 3);
                         let label: number = offset + this.readInt(u);
@@ -960,31 +959,31 @@ export class ClassReader {
                         mv.visitLookupSwitchInsn(labels[label], keys, values);
                         break;
                     };
-                case WriterConstant.VAR_INSN:
+                case ClassWriter.VAR_INSN:
                     mv.visitVarInsn(opcode, b[u + 1] & 255);
                     u += 2;
                     break;
-                case WriterConstant.SBYTE_INSN:
+                case ClassWriter.SBYTE_INSN:
                     mv.visitIntInsn(opcode, b[u + 1]);
                     u += 2;
                     break;
-                case WriterConstant.SHORT_INSN:
+                case ClassWriter.SHORT_INSN:
                     mv.visitIntInsn(opcode, this.readShort(u + 1));
                     u += 3;
                     break;
-                case WriterConstant.LDC_INSN:
+                case ClassWriter.LDC_INSN:
                     mv.visitLdcInsn(this.readConst(b[u + 1] & 255, c));
                     u += 2;
                     break;
-                case WriterConstant.LDCW_INSN:
+                case ClassWriter.LDCW_INSN:
                     mv.visitLdcInsn(this.readConst(this.readUnsignedShort(u + 1), c));
                     u += 3;
                     break;
-                case WriterConstant.FIELDORMETH_INSN:
-                case WriterConstant.ITFMETH_INSN:
+                case ClassWriter.FIELDORMETH_INSN:
+                case ClassWriter.ITFMETH_INSN:
                     {
                         let cpIndex: number = this.items[this.readUnsignedShort(u + 1)];
-                        let itf: boolean = b[cpIndex - 1] === WriterConstant.IMETH;
+                        let itf: boolean = b[cpIndex - 1] === ClassWriter.IMETH;
                         let iowner: string = this.readClass(cpIndex, c);
                         cpIndex = this.items[this.readUnsignedShort(cpIndex + 2)];
                         let iname: string = this.readUTF8(cpIndex, c);
@@ -1001,7 +1000,7 @@ export class ClassReader {
                         }
                         break;
                     };
-                case WriterConstant.INDYMETH_INSN:
+                case ClassWriter.INDYMETH_INSN:
                     {
                         let cpIndex: number = this.items[this.readUnsignedShort(u + 1)];
                         let bsmIndex: number = context.bootstrapMethods[this.readUnsignedShort(cpIndex)];
@@ -1020,11 +1019,11 @@ export class ClassReader {
                         u += 5;
                         break;
                     };
-                case WriterConstant.TYPE_INSN:
+                case ClassWriter.TYPE_INSN:
                     mv.visitTypeInsn(opcode, this.readClass(u + 1, c));
                     u += 3;
                     break;
-                case WriterConstant.IINC_INSN:
+                case ClassWriter.IINC_INSN:
                     mv.visitIincInsn(b[u + 1] & 255, b[u + 2]);
                     u += 3;
                     break;
@@ -1909,25 +1908,25 @@ export class ClassReader {
     public readConst(item: number, buf: number[]): any {
         let index: number = this.items[item];
         switch ((this.buf[index - 1])) {
-            case WriterConstant.INT:
+            case ClassWriter.INT:
                 return this.readInt(index);
-            case WriterConstant.FLOAT:
+            case ClassWriter.FLOAT:
                 return intBitsToFloat(this.readInt(index));
-            case WriterConstant.LONG:
+            case ClassWriter.LONG:
                 return this.readLong(index);
-            case WriterConstant.DOUBLE:
+            case ClassWriter.DOUBLE:
                 return longBitsToDouble(this.readLong(index));
-            case WriterConstant.CLASS:
+            case ClassWriter.CLASS:
                 return Type.getObjectType(this.readUTF8(index, buf));
-            case WriterConstant.STR:
+            case ClassWriter.STR:
                 return this.readUTF8(index, buf);
-            case WriterConstant.MTYPE:
+            case ClassWriter.MTYPE:
                 return Type.getMethodType(this.readUTF8(index, buf));
             default:
                 let tag: number = this.readByte(index);
                 let items: number[] = this.items;
                 let cpIndex: number = items[this.readUnsignedShort(index + 1)];
-                let itf: boolean = this.buf[cpIndex - 1] === WriterConstant.IMETH;
+                let itf: boolean = this.buf[cpIndex - 1] === ClassWriter.IMETH;
                 let owner: string = this.readClass(cpIndex, buf);
                 cpIndex = items[this.readUnsignedShort(cpIndex + 2)];
                 let name: string = this.readUTF8(cpIndex, buf);

@@ -23,20 +23,8 @@ export class ByteVector {
      * @param initialSize
      * the initial size of the byte vector to be constructed.
      */
-    public constructor(initialSize?: any) {
-        if (((typeof initialSize === 'number') || initialSize === null)) {
-            let __args = Array.prototype.slice.call(arguments);
-            this.length = 0;
-            (() => {
-                // this.data = new Array(initialSize);
-            })();
-        } else if (initialSize === undefined) {
-            let __args = Array.prototype.slice.call(arguments);
-            this.length = 0;
-            (() => {
-                // this.data = new Array(64);
-            })();
-        } else throw new Error('invalid overload');
+    public constructor(initialSize: number = 64) {
+        this.data = new Buffer(initialSize);
     }
 
     /**

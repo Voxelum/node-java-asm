@@ -1,16 +1,14 @@
-/* Generated from Java with JSweet 1.2.0-SNAPSHOT - http://www.jsweet.org */
 /**
  * An edge in the control flow graph of a method body. See {@link Label Label}.
- * 
+ *
  * @author Eric Bruneton
  */
-import { Label } from './Label'
-export class Edge {
+import { Label } from './Label';
+export declare class Edge {
     /**
      * Denotes a normal control flow graph edge.
      */
-    static NORMAL: number = 0;
-
+    static NORMAL: number;
     /**
      * Denotes a control flow graph edge corresponding to an exception handler.
      * More precisely any {@link Edge} whose {@link #info} is strictly positive
@@ -18,8 +16,7 @@ export class Edge {
      * the index, in the {@link ClassWriter} type table, of the exception that
      * is catched.
      */
-    static EXCEPTION: number = 2147483647;
-
+    static EXCEPTION: number;
     /**
      * Information about this control flow graph edge. If
      * {@link ClassWriter#COMPUTE_MAXS} is used this field is the (relative)
@@ -31,22 +28,14 @@ export class Edge {
      * EXCEPTION).
      */
     info: number;
-
     /**
      * The successor block of the basic block from which this edge originates.
      */
     successor: Label;
-
     /**
      * The next edge in the list of successors of the originating basic block.
      * See {@link Label#successors successors}.
      */
     next: Edge;
-
-    constructor() {
-        this.info = 0;
-    }
+    constructor();
 }
-
-
-

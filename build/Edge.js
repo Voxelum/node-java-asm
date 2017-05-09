@@ -18,4 +18,3 @@ Edge.NORMAL = 0;
  */
 Edge.EXCEPTION = 2147483647;
 exports.Edge = Edge;
-Edge["__class"] = "Edge";
