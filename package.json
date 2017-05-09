@@ -6,7 +6,6 @@
     "dependencies": {
         "@types/node": "^7.0.18",
         "@types/long": "^3.0.31",
-        "number-util": "^1.0.3",
         "long": "^3.2.0"
     },
     "devDependencies": {
