@@ -227,7 +227,7 @@ export class Item {
      * @param bsmIndex
      * zero based index into the class attribute BootrapMethods.
      */
-    set$java_lang_String$java_lang_String$int(name: string, desc: string, bsmIndex: number) {
+    setInvkDynItem(name: string, desc: string, bsmIndex: number) {
         this.type = ClassWriter.INDY;
         this.longVal = Long.fromInt(bsmIndex);
         this.strVal1 = name;
@@ -245,7 +245,7 @@ export class Item {
      * hashcode of the bootstrap method and the hashcode of all
      * bootstrap arguments.
      */
-    set$int$int(position: number, hashCode: number) {
+    setPosHash(position: number, hashCode: number) {
         this.type = ClassWriter.BSM;
         this.intVal = position;
         this.__hashCode = hashCode;

@@ -169,22 +169,22 @@ export class ByteVector {
      * a long.
      * @return this byte vector.
      */
-    public putLong(l: number): ByteVector {
+    public putLong(l: Long): ByteVector {
         let length: number = this.length;
         if (length + 8 > this.data.length) {
             this.enlarge(8);
         }
         let data: Buffer = this.data;
-        let i: number = (<number>(l >>> 32) | 0);
-        data[length++] = (<number>(i >>> 24) | 0);
-        data[length++] = (<number>(i >>> 16) | 0);
-        data[length++] = (<number>(i >>> 8) | 0);
-        data[length++] = (<number>i | 0);
-        i = (<number>l | 0);
-        data[length++] = (<number>(i >>> 24) | 0);
-        data[length++] = (<number>(i >>> 16) | 0);
-        data[length++] = (<number>(i >>> 8) | 0);
-        data[length++] = (<number>i | 0);
+        let i: number = l.getHighBits();
+        data[length++] = (i >>> 24) & 256;
+        data[length++] = (i >>> 16) & 256;
+        data[length++] = (i >>> 8) & 256;
+        data[length++] = i & 256;
+        i = l.getLowBits();
+        data[length++] = ((i >>> 24) & 256);
+        data[length++] = ((i >>> 16) & 256);
+        data[length++] = ((i >>> 8) & 256);
+        data[length++] = (i & 256);
         this.length = length;
         return this;
     }

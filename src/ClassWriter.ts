@@ -43,21 +43,14 @@ import { Attribute } from './Attribute'
 import { ByteVector } from './ByteVector'
 import { ClassReader } from './ClassReader'
 import { ClassVisitor } from './ClassVisitor'
-import { Context } from './Context'
-import { CurrentFrame } from './CurrentFrame'
-import { Edge } from './Edge'
 import { FieldVisitor } from './FieldVisitor'
 import { FieldWriter } from './FieldWriter'
-import { Frame } from './Frame'
 import { Handle } from './Handle'
 import { Item } from './Item'
-import { Label } from './Label'
 import { MethodVisitor } from './MethodVisitor'
 import { MethodWriter } from './MethodWriter'
 import { Opcodes } from './Opcodes'
-import { Type } from './Type'
 import { TypePath } from './TypePath'
-import { TypeReference } from './TypeReference'
 
 export class ClassWriter extends ClassVisitor {
     static __static_initialized: boolean = false;
@@ -1228,57 +1221,56 @@ export class ClassWriter extends ClassVisitor {
      * @return a new or an already existing invokedynamic type reference item.
      */
     newInvokeDynamicItem(name: string, desc: string, bsm: Handle, ...bsmArgs: any[]): Item {
-        throw new Error('not supported')
-        // let bootstrapMethods: ByteVector = this.bootstrapMethods;
-        // if (bootstrapMethods == null) {
-        //     bootstrapMethods = this.bootstrapMethods = new ByteVector();
-        // }
-        // let position: number = bootstrapMethods.length;
-        // let hashCode: number = bsm.hashCode();
-        // bootstrapMethods.putShort(this.newHandle(bsm.tag, bsm.owner, bsm.name, bsm.desc, bsm.isInterface()));
-        // let argsLength: number = bsmArgs.length;
-        // bootstrapMethods.putShort(argsLength);
-        // for (let i: number = 0; i < argsLength; i++) {
-        //     let bsmArg: any = bsmArgs[i];
-        //     hashCode ^= (<any>bsmArg.toString());
-        //     bootstrapMethods.putShort(this.newConst(bsmArg));
-        // }
-        // let data: number[] = bootstrapMethods.data;
-        // let length: number = (1 + 1 + argsLength) << 1;
-        // hashCode &= 2147483647;
-        // let result: Item = this.items[hashCode % this.items.length];
-        // loop: while ((result != null)) {
-        //     if (result.type !== ClassWriter.BSM || result.__hashCode !== hashCode) {
-        //         result = result.next;
-        //         continue;
-        //     }
-        //     let resultPosition: number = result.intVal;
-        //     for (let p: number = 0; p < length; p++) {
-        //         if (data[position + p] !== data[resultPosition + p]) {
-        //             result = result.next;
-        //             continue loop;
-        //         }
-        //     }
-        //     break;
-        // };
-        // let bootstrapMethodIndex: number;
-        // if (result != null) {
-        //     bootstrapMethodIndex = result.index;
-        //     bootstrapMethods.length = position;
-        // } else {
-        //     bootstrapMethodIndex = this.bootstrapMethodsCount++;
-        //     result = new Item(bootstrapMethodIndex);
-        //     result.set(position, hashCode);
-        //     this.put(result);
-        // }
-        // this.key3.set(name, desc, bootstrapMethodIndex);
-        // result = this.get(this.key3);
-        // if (result == null) {
-        //     this.put122(ClassWriter.INDY, bootstrapMethodIndex, this.newNameType(name, desc));
-        //     result = new Item(this.index++, this.key3);
-        //     this.put(result);
-        // }
-        // return result;
+        let bootstrapMethods: ByteVector = this.bootstrapMethods;
+        if (bootstrapMethods == null) {
+            bootstrapMethods = this.bootstrapMethods = new ByteVector();
+        }
+        let position: number = bootstrapMethods.length;
+        let hashCode: number = bsm.hashCode();
+        bootstrapMethods.putShort(this.newHandle(bsm.tag, bsm.owner, bsm.name, bsm.descriptor, bsm.isInterface));
+        let argsLength: number = bsmArgs.length;
+        bootstrapMethods.putShort(argsLength);
+        for (let i: number = 0; i < argsLength; i++) {
+            let bsmArg: any = bsmArgs[i];
+            hashCode ^= (<any>bsmArg.toString());
+            bootstrapMethods.putShort(this.newConst(bsmArg));
+        }
+        let data: Buffer = bootstrapMethods.data;
+        let length: number = (1 + 1 + argsLength) << 1;
+        hashCode &= 2147483647;
+        let result: Item = this.items[hashCode % this.items.length];
+        loop: while ((result != null)) {
+            if (result.type !== ClassWriter.BSM || result.__hashCode !== hashCode) {
+                result = result.next;
+                continue;
+            }
+            let resultPosition: number = result.intVal;
+            for (let p: number = 0; p < length; p++) {
+                if (data[position + p] !== data[resultPosition + p]) {
+                    result = result.next;
+                    continue loop;
+                }
+            }
+            break;
+        };
+        let bootstrapMethodIndex: number;
+        if (result != null) {
+            bootstrapMethodIndex = result.index;
+            bootstrapMethods.length = position;
+        } else {
+            bootstrapMethodIndex = this.bootstrapMethodsCount++;
+            result = new Item(bootstrapMethodIndex);
+            result.setPosHash(position, hashCode);
+            this.put(result);
+        }
+        this.key3.setInvkDynItem(name, desc, bootstrapMethodIndex);
+        result = this.get(this.key3);
+        if (result == null) {
+            this.put122(ClassWriter.INDY, bootstrapMethodIndex, this.newNameType(name, desc));
+            result = new Item(this.index++, this.key3);
+            this.put(result);
+        }
+        return result;
     }
 
     /**
@@ -1399,7 +1391,7 @@ export class ClassWriter extends ClassVisitor {
      * @return a new or already existing int item.
      */
     newInteger(value: number): Item {
-        this.key.set(value);
+        this.key.set$int(value);
         let result: Item = this.get(this.key);
         if (result == null) {
             this.pool.putByte(ClassWriter.INT).putInt(value);
@@ -1418,7 +1410,7 @@ export class ClassWriter extends ClassVisitor {
      * @return a new or already existing float item.
      */
     newFloat(value: number): Item {
-        this.key.set(value);
+        this.key.set$float(value);
         let result: Item = this.get(this.key);
         if (result == null) {
             this.pool.putByte(ClassWriter.FLOAT).putInt(this.key.intVal);
@@ -1436,17 +1428,16 @@ export class ClassWriter extends ClassVisitor {
      * the long value.
      * @return a new or already existing long item.
      */
-    newLong(value: number): Item {
-        // this.key.set(value);
-        // let result: Item = this.get(this.key);
-        // if (result == null) {
-        //     this.pool.putByte(ClassWriter.LONG).putLong(value);
-        //     result = new Item(this.index, this.key);
-        //     this.index += 2;
-        //     this.put(result);
-        // }
-        // return result;
-        throw new Error('not supported')
+    newLong(value: Long): Item {
+        this.key.set$long(value);
+        let result: Item = this.get(this.key);
+        if (result == null) {
+            this.pool.putByte(ClassWriter.LONG).putLong(value);
+            result = new Item(this.index, this.key);
+            this.index += 2;
+            this.put(result);
+        }
+        return result;
     }
 
     /**
@@ -1458,16 +1449,15 @@ export class ClassWriter extends ClassVisitor {
      * @return a new or already existing double item.
      */
     newDouble(value: number): Item {
-        throw new Error('not supported')
-        // this.key.set(value);
-        // let result: Item = this.get(this.key);
-        // if (result == null) {
-        //     this.pool.putByte(ClassWriter.DOUBLE).putLong(this.key.longVal);
-        //     result = new Item(this.index, this.key);
-        //     this.index += 2;
-        //     this.put(result);
-        // }
-        // return result;
+        this.key.set$double(value);
+        let result: Item = this.get(this.key);
+        if (result == null) {
+            this.pool.putByte(ClassWriter.DOUBLE).putLong(this.key.longVal);
+            result = new Item(this.index, this.key);
+            this.index += 2;
+            this.put(result);
+        }
+        return result;
     }
 
     /**

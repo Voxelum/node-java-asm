@@ -42,6 +42,9 @@ import { ByteVector } from "./ByteVector";
 import { Opcodes } from "./Opcodes";
 import { Item } from "./Item";
 import { TypePath } from "./TypePath";
+import { Type } from './Type'
+
+import * as Long from 'long'
 
 export class AnnotationWriter extends AnnotationVisitor {
     /**
@@ -118,76 +121,75 @@ export class AnnotationWriter extends AnnotationVisitor {
     }
 
     public visit(name: string, value: any) {
-        throw new Error('not supported')
-        // ++this.size;
-        // if (this.named) {
-        //     this.bv.putShort(this.cw.newUTF8(name));
-        // }
-        // if (typeof value === 'string') {
-        //     this.bv.put12(('s').charCodeAt(0), this.cw.newUTF8(<string>value));
-        // } else if (typeof value === 'number') {
-        //     this.bv.put12(('B').charCodeAt(0), this.cw.newInteger((<number>value).byteValue()).index);
-        // } else if (typeof value === 'boolean') {
-        //     let v: number = (<boolean>value).booleanValue() ? 1 : 0;
-        //     this.bv.put12(('Z').charCodeAt(0), this.cw.newInteger(v).index);
-        // } else if (typeof value === 'string') {
-        //     this.bv.put12(('C').charCodeAt(0), this.cw.newInteger(((<string>value).charValue()).charCodeAt(0)).index);
-        // } else if (typeof value === 'number') {
-        //     this.bv.put12(('S').charCodeAt(0), this.cw.newInteger((<number>value).shortValue()).index);
-        // } else if (value != null && value instanceof Type) {
-        //     this.bv.put12(('c').charCodeAt(0), this.cw.newUTF8((<Type>value).getDescriptor()));
-        // } else if (value != null && value instanceof Array) {
-        //     let v: number[] = <number[]>value;
-        //     this.bv.put12(('[').charCodeAt(0), v.length);
-        //     for (let i: number = 0; i < v.length; i++) {
-        //         this.bv.put12(('B').charCodeAt(0), this.cw.newInteger(v[i]).index);
-        //     }
-        // } else if (value != null && value instanceof Array) {
-        //     let v: boolean[] = <boolean[]>value;
-        //     this.bv.put12(('[').charCodeAt(0), v.length);
-        //     for (let i: number = 0; i < v.length; i++) {
-        //         this.bv.put12(('Z').charCodeAt(0), this.cw.newInteger(v[i] ? 1 : 0).index);
-        //     }
-        // } else if (value != null && value instanceof Array) {
-        //     let v: number[] = <number[]>value;
-        //     this.bv.put12(('[').charCodeAt(0), v.length);
-        //     for (let i: number = 0; i < v.length; i++) {
-        //         this.bv.put12(('S').charCodeAt(0), this.cw.newInteger(v[i]).index);
-        //     }
-        // } else if (value != null && value instanceof Array) {
-        //     let v: string[] = <string[]>value;
-        //     this.bv.put12(('[').charCodeAt(0), v.length);
-        //     for (let i: number = 0; i < v.length; i++) {
-        //         this.bv.put12(('C').charCodeAt(0), this.cw.newInteger((v[i]).charCodeAt(0)).index);
-        //     }
-        // } else if (value != null && value instanceof Array) {
-        //     let v: number[] = <number[]>value;
-        //     this.bv.put12(('[').charCodeAt(0), v.length);
-        //     for (let i: number = 0; i < v.length; i++) {
-        //         this.bv.put12(('I').charCodeAt(0), this.cw.newInteger(v[i]).index);
-        //     }
-        // } else if (value != null && value instanceof Array) {
-        //     let v: number[] = <number[]>value;
-        //     this.bv.put12(('[').charCodeAt(0), v.length);
-        //     for (let i: number = 0; i < v.length; i++) {
-        //         this.bv.put12(('J').charCodeAt(0), this.cw.newLong(v[i]).index);
-        //     }
-        // } else if (value != null && value instanceof Array) {
-        //     let v: number[] = <number[]>value;
-        //     this.bv.put12(('[').charCodeAt(0), v.length);
-        //     for (let i: number = 0; i < v.length; i++) {
-        //         this.bv.put12(('F').charCodeAt(0), this.cw.newFloat(v[i]).index);
-        //     }
-        // } else if (value != null && value instanceof Array) {
-        //     let v: number[] = <number[]>value;
-        //     this.bv.put12(('[').charCodeAt(0), v.length);
-        //     for (let i: number = 0; i < v.length; i++) {
-        //         this.bv.put12(('D').charCodeAt(0), this.cw.newDouble(v[i]).index);
-        //     }
-        // } else {
-        //     let i: Item = this.cw.newConstItem(value);
-        //     this.bv.put12((".s.IFJDCS".charAt(i.type)).charCodeAt(0), i.index);
-        // }
+        ++this.size;
+        if (this.named) {
+            this.bv.putShort(this.cw.newUTF8(name));
+        }
+        if (typeof value === 'string') {
+            this.bv.put12(('s').charCodeAt(0), this.cw.newUTF8(<string>value));
+        } else if (typeof value === 'number') {
+            this.bv.put12(('B').charCodeAt(0), this.cw.newInteger(<number>value).index);
+        } else if (typeof value === 'boolean') {
+            let v: number = (<boolean>value) ? 1 : 0;
+            this.bv.put12(('Z').charCodeAt(0), this.cw.newInteger(v).index);
+        } else if (typeof value === 'string') {
+            this.bv.put12(('C').charCodeAt(0), this.cw.newInteger((<string>value).charCodeAt(0)).index);
+        } else if (typeof value === 'number') {
+            this.bv.put12(('S').charCodeAt(0), this.cw.newInteger((<number>value)).index);
+        } else if (value != null && value instanceof Type) {
+            this.bv.put12(('c').charCodeAt(0), this.cw.newUTF8((<Type>value).getDescriptor()));
+        } else if (value != null && value instanceof Array) {
+            let v: number[] = <number[]>value;
+            this.bv.put12(('[').charCodeAt(0), v.length);
+            for (let i: number = 0; i < v.length; i++) {
+                this.bv.put12(('B').charCodeAt(0), this.cw.newInteger(v[i]).index);
+            }
+        } else if (value != null && value instanceof Array) {
+            let v: boolean[] = <boolean[]>value;
+            this.bv.put12(('[').charCodeAt(0), v.length);
+            for (let i: number = 0; i < v.length; i++) {
+                this.bv.put12(('Z').charCodeAt(0), this.cw.newInteger(v[i] ? 1 : 0).index);
+            }
+        } else if (value != null && value instanceof Array) {
+            let v: number[] = <number[]>value;
+            this.bv.put12(('[').charCodeAt(0), v.length);
+            for (let i: number = 0; i < v.length; i++) {
+                this.bv.put12(('S').charCodeAt(0), this.cw.newInteger(v[i]).index);
+            }
+        } else if (value != null && value instanceof Array) {
+            let v: string[] = <string[]>value;
+            this.bv.put12(('[').charCodeAt(0), v.length);
+            for (let i: number = 0; i < v.length; i++) {
+                this.bv.put12(('C').charCodeAt(0), this.cw.newInteger((v[i]).charCodeAt(0)).index);
+            }
+        } else if (value != null && value instanceof Array) {
+            let v: number[] = <number[]>value;
+            this.bv.put12(('[').charCodeAt(0), v.length);
+            for (let i: number = 0; i < v.length; i++) {
+                this.bv.put12(('I').charCodeAt(0), this.cw.newInteger(v[i]).index);
+            }
+        } else if (value != null && value instanceof Array) {
+            let v: number[] = <number[]>value;
+            this.bv.put12(('[').charCodeAt(0), v.length);
+            for (let i: number = 0; i < v.length; i++) {
+                this.bv.put12(('J').charCodeAt(0), this.cw.newLong(v[i]).index);
+            }
+        } else if (value != null && value instanceof Array) {
+            let v: number[] = <number[]>value;
+            this.bv.put12(('[').charCodeAt(0), v.length);
+            for (let i: number = 0; i < v.length; i++) {
+                this.bv.put12(('F').charCodeAt(0), this.cw.newFloat(v[i]).index);
+            }
+        } else if (value != null && value instanceof Array) {
+            let v: number[] = <number[]>value;
+            this.bv.put12(('[').charCodeAt(0), v.length);
+            for (let i: number = 0; i < v.length; i++) {
+                this.bv.put12(('D').charCodeAt(0), this.cw.newDouble(v[i]).index);
+            }
+        } else {
+            let i: Item = this.cw.newConstItem(value);
+            this.bv.put12((".s.IFJDCS".charAt(i.type)).charCodeAt(0), i.index);
+        }
     }
 
     public visitEnum(name: string, desc: string, value: string) {
