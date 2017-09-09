@@ -172,7 +172,8 @@ export class AnnotationWriter extends AnnotationVisitor {
             let v: number[] = <number[]>value;
             this.bv.put12(('[').charCodeAt(0), v.length);
             for (let i: number = 0; i < v.length; i++) {
-                this.bv.put12(('J').charCodeAt(0), this.cw.newLong(v[i]).index);
+                // break... 
+                // this.bv.put12(('J').charCodeAt(0), this.cw.newLong(v[i]).index);
             }
         } else if (value != null && value instanceof Array) {
             let v: number[] = <number[]>value;
