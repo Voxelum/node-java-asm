@@ -38,7 +38,7 @@ export class ByteVector {
     /**
      * The content of this vector.
      */
-    data: Buffer;
+    data: Uint8Array;
 
     /**
      * Actual number of bytes in this vector.
@@ -53,7 +53,7 @@ export class ByteVector {
      * the initial size of the byte vector to be constructed.
      */
     public constructor(initialSize: number = 64) {
-        this.data = new Buffer(initialSize);
+        this.data = new Uint8Array(initialSize);
     }
 
     /**
@@ -89,7 +89,7 @@ export class ByteVector {
         if (length + 2 > this.data.length) {
             this.enlarge(2);
         }
-        let data: Buffer = this.data;
+        let data: Uint8Array = this.data;
         data[length++] = (<number>b1 | 0);
         data[length++] = (<number>b2 | 0);
         this.length = length;
@@ -109,7 +109,7 @@ export class ByteVector {
         if (length + 2 > this.data.length) {
             this.enlarge(2);
         }
-        let data: Buffer = this.data;
+        let data: Uint8Array = this.data;
         data[length++] = (<number>(s >>> 8) | 0);
         data[length++] = (<number>s | 0);
         this.length = length;
@@ -131,7 +131,7 @@ export class ByteVector {
         if (length + 3 > this.data.length) {
             this.enlarge(3);
         }
-        let data: Buffer = this.data;
+        let data: Uint8Array = this.data;
         data[length++] = (<number>b | 0);
         data[length++] = (<number>(s >>> 8) | 0);
         data[length++] = (<number>s | 0);
@@ -152,7 +152,7 @@ export class ByteVector {
         if (length + 4 > this.data.length) {
             this.enlarge(4);
         }
-        let data: Buffer = this.data;
+        let data: Uint8Array = this.data;
         data[length++] = (<number>(i >>> 24) | 0);
         data[length++] = (<number>(i >>> 16) | 0);
         data[length++] = (<number>(i >>> 8) | 0);
@@ -174,7 +174,7 @@ export class ByteVector {
         if (length + 8 > this.data.length) {
             this.enlarge(8);
         }
-        let data: Buffer = this.data;
+        let data: Uint8Array = this.data;
         let i: number = l.getHighBits();
         data[length++] = (i >>> 24) & 256;
         data[length++] = (i >>> 16) & 256;
@@ -206,7 +206,7 @@ export class ByteVector {
         if (len + 2 + charLength > this.data.length) {
             this.enlarge(2 + charLength);
         }
-        let data: Buffer = this.data;
+        let data: Uint8Array = this.data;
         data[len++] = (<number>(charLength >>> 8) | 0);
         data[len++] = (<number>charLength | 0);
         for (let i: number = 0; i < charLength; ++i) {
@@ -295,7 +295,7 @@ export class ByteVector {
      * number of bytes of b that must be copied.
      * @return this byte vector.
      */
-    public putByteArray(b: Buffer, off: number, len: number): ByteVector {
+    public putByteArray(b: Uint8Array, off: number, len: number): ByteVector {
         if (this.length + len > this.data.length) {
             this.enlarge(len);
         }
@@ -319,7 +319,7 @@ export class ByteVector {
     private enlarge(size: number) {
         let length1: number = 2 * this.data.length;
         let length2: number = this.length + size;
-        this.data = Buffer.concat([this.data], length1 > length2 ? length1 : length2);
+        this.data = Uint8Array.concat([this.data], length1 > length2 ? length1 : length2);
         // // java.lang.System.arraycopy(this.data, 0, newData, 0, this.length);
     }
 }

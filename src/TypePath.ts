@@ -64,7 +64,7 @@ export class TypePath {
     /**
      * The byte array where the path is stored, in Java class file format.
      */
-    buf: Buffer;
+    buf: Uint8Array;
 
     /**
      * The offset of the first byte of the type path in 'b'.
@@ -80,7 +80,7 @@ export class TypePath {
      * @param offset
      * the offset of the first byte of the type path in 'b'.
      */
-    constructor(b: Buffer, offset: number) {
+    constructor(b: Uint8Array, offset: number) {
         this.offset = 0;
         this.buf = b;
         this.offset = offset;

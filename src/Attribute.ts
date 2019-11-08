@@ -48,7 +48,7 @@ export class Attribute {
     /**
      * The raw value of this attribute, used only for unknown attributes.
      */
-    value: Buffer;
+    value: Uint8Array;
 
     /**
      * The next attribute in this attribute list. May be <tt>null</tt>.
@@ -157,7 +157,7 @@ export class Attribute {
      * is not a code attribute.
      * @return the byte array form of this attribute.
      */
-    write(cw: ClassWriter, code: Buffer, len: number, maxStack: number, maxLocals: number): ByteVector {
+    write(cw: ClassWriter, code: Uint8Array, len: number, maxStack: number, maxLocals: number): ByteVector {
         let v: ByteVector = new ByteVector();
         v.data = this.value;
         v.length = this.value.length;
@@ -204,7 +204,7 @@ export class Attribute {
      * @return the size of all the attributes in this attribute list. This size
      * includes the size of the attribute headers.
      */
-    getSize(cw: ClassWriter, code: Buffer, len: number, maxStack: number, maxLocals: number): number {
+    getSize(cw: ClassWriter, code: Uint8Array, len: number, maxStack: number, maxLocals: number): number {
         let attr: Attribute = this;
         let size: number = 0;
         while ((attr != null)) {
@@ -241,7 +241,7 @@ export class Attribute {
      * @param out
      * where the attributes must be written.
      */
-    put(cw: ClassWriter, code: Buffer, len: number, maxStack: number, maxLocals: number, out: ByteVector) {
+    put(cw: ClassWriter, code: Uint8Array, len: number, maxStack: number, maxLocals: number, out: ByteVector) {
         let attr: Attribute = this;
         while ((attr != null)) {
             let b: ByteVector = attr.write(cw, code, len, maxStack, maxLocals);

@@ -44,7 +44,7 @@ import { Item } from "./Item";
 import { TypePath } from "./TypePath";
 import { Type } from './Type'
 
-import * as Long from 'long'
+// import * as Long from 'long'
 
 export class AnnotationWriter extends AnnotationVisitor {
     /**
@@ -221,7 +221,7 @@ export class AnnotationWriter extends AnnotationVisitor {
 
     public visitEnd() {
         if (this.parent != null) {
-            let data: Buffer = this.parent.data;
+            let data: Uint8Array = this.parent.data;
             data[this.offset] = (<number>(this.size >>> 8) | 0);
             data[this.offset + 1] = (<number>this.size | 0);
         }

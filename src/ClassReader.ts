@@ -138,7 +138,7 @@ export class ClassReader {
      * modified. This field is intended for {@link Attribute} sub classes, and
      * is normally not needed by class generators or adapters.</i>
      */
-    public buf: Buffer;
+    public buf: Uint8Array;
 
     /**
      * The start index of each constant pool item in {@link #b b}, plus one. The
@@ -175,7 +175,7 @@ export class ClassReader {
      * @param off the start offset of the class data.
      * @param len the length of the class data.
      */
-    public constructor(buffer: Buffer, off: number = 0, len: number = buffer.length) {
+    public constructor(buffer: Uint8Array, off: number = 0, len: number = buffer.length) {
         this.maxStringLength = 0;
         this.header = 0;
         this.buf = buffer;
@@ -675,7 +675,7 @@ export class ClassReader {
      * @param u       the start offset of the code attribute in the class file.
      */
     private readCode(mv: MethodVisitor, context: Context, u: number) {
-        let b: Buffer = this.buf;
+        let b: Uint8Array = this.buf;
         let c: number[] = context.buffer;
         let maxStack: number = this.readUnsignedShort(u);
         let maxLocals: number = this.readUnsignedShort(u + 2);
@@ -1782,8 +1782,8 @@ export class ClassReader {
      * @return the read value.
      */
     public readByte(index: number): number {
-        return this.buf.readInt8(index);
-        // return this.buf[index] & 255;
+        // return this.buf.readInt8(index);
+        return this.buf[index] & 255;
     }
 
     /**
@@ -1795,9 +1795,9 @@ export class ClassReader {
      * @return the read value.
      */
     public readUnsignedShort(index: number): number {
-        return this.buf.readUInt16BE(index);
-        // let b: number[] = this.buf;
-        // return ((b[index] & 255) << 8) | (b[index + 1] & 255);
+        // return this.buf.readUInt16BE(index);
+        let b = this.buf;
+        return ((b[index] & 255) << 8) | (b[index + 1] & 255);
     }
 
     /**
@@ -1809,9 +1809,9 @@ export class ClassReader {
      * @return the read value.
      */
     public readShort(index: number): number {
-        return this.buf.readInt16BE(index);
-        // let b: number[] = this.buf;
-        // return (<number>(((b[index] & 255) << 8) | (b[index + 1] & 255)) | 0);
+        // return this.buf.readInt16BE(index);
+        let b = this.buf;
+        return (<number>(((b[index] & 255) << 8) | (b[index + 1] & 255)) | 0);
     }
 
     /**
@@ -1823,9 +1823,9 @@ export class ClassReader {
      * @return the read value.
      */
     public readInt(index: number): number {
-        return this.buf.readInt32BE(index);
-        // let b: number[] = this.buf;
-        // return ((b[index] & 255) << 24) | ((b[index + 1] & 255) << 16) | ((b[index + 2] & 255) << 8) | (b[index + 3] & 255);
+        // return this.buf.readInt32BE(index);
+        let b = this.buf;
+        return ((b[index] & 255) << 24) | ((b[index + 1] & 255) << 16) | ((b[index + 2] & 255) << 8) | (b[index + 3] & 255);
     }
 
     /**
@@ -1874,7 +1874,7 @@ export class ClassReader {
      */
     private readUTF(index: number, utfLen: number, buf: number[]): string {
         let endIndex: number = index + utfLen;
-        let b: Buffer = this.buf;
+        let b: Uint8Array = this.buf;
         let strLen: number = 0;
         let c: number;
         let st: number = 0;

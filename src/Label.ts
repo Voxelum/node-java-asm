@@ -341,7 +341,7 @@ export class Label {
      * if this label has already been resolved, or if it has not
      * been created by the given code writer.
      */
-    resolve(owner: MethodWriter, position: number, data: Buffer): boolean {
+    resolve(owner: MethodWriter, position: number, data: Uint8Array): boolean {
         let needUpdate: boolean = false;
         this.status |= Label.RESOLVED;
         this.position = position;

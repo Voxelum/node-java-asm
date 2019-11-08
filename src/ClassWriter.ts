@@ -1235,7 +1235,7 @@ export class ClassWriter extends ClassVisitor {
             hashCode ^= (<any>bsmArg.toString());
             bootstrapMethods.putShort(this.newConst(bsmArg));
         }
-        let data: Buffer = bootstrapMethods.data;
+        let data: Uint8Array = bootstrapMethods.data;
         let length: number = (1 + 1 + argsLength) << 1;
         hashCode &= 2147483647;
         let result: Item = this.items[hashCode % this.items.length];
