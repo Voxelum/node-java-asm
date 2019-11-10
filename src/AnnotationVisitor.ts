@@ -50,7 +50,7 @@ export abstract class AnnotationVisitor {
      * The annotation visitor to which this visitor must delegate method calls.
      * May be null.
      */
-    av: AnnotationVisitor?;
+    av: AnnotationVisitor | null;
 
     /**
      * Constructs a new {@link AnnotationVisitor}.

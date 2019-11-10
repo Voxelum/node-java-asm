@@ -319,8 +319,9 @@ export class ByteVector {
     private enlarge(size: number) {
         let length1: number = 2 * this.data.length;
         let length2: number = this.length + size;
-        this.data = Uint8Array.concat([this.data], length1 > length2 ? length1 : length2);
-        // // java.lang.System.arraycopy(this.data, 0, newData, 0, this.length);
+        const newArr = new Uint8Array(length1 > length2 ? length1 : length2);
+        newArr.set(this.data);
+        this.data = newArr;
     }
 }
 ByteVector["__class"] = "ByteVector";
