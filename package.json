@@ -4,11 +4,11 @@
     "description": "The migration of the Java ASM framework",
     "main": "./build/src/asm.js",
     "dependencies": {
-        "@types/node": "^7.0.18",
-        "@types/long": "^3.0.31",
         "long": "^3.2.0"
     },
     "devDependencies": {
+        "@types/node": "^10.0.0",
+        "@types/long": "^3.0.31",
         "typescript": "^2.3.2"
     },
     "scripts": {
