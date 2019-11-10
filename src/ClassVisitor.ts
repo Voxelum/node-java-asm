@@ -55,7 +55,7 @@ export abstract class ClassVisitor {
      * The class visitor to which this visitor must delegate method calls. May
      * be null.
      */
-    cv: ClassVisitor;
+    cv: ClassVisitor | null;
 
     /**
      * Constructs a new {@link ClassVisitor}.
@@ -67,7 +67,7 @@ export abstract class ClassVisitor {
      * the class visitor to which this visitor must delegate method
      * calls. May be null.
      */
-    public constructor(api: number, cv: ClassVisitor = null) {
+    public constructor(api: number, cv: ClassVisitor | null = null) {
         this.api = 0;
         if (api !== Opcodes.ASM4 && api !== Opcodes.ASM5) {
             throw new Error();
@@ -155,7 +155,7 @@ export abstract class ClassVisitor {
      * @return a visitor to visit the annotation values, or <tt>null</tt> if
      * this visitor is not interested in visiting this annotation.
      */
-    public visitAnnotation(desc: string, visible: boolean): AnnotationVisitor {
+    public visitAnnotation(desc: string, visible: boolean): AnnotationVisitor | null {
         if (this.cv != null) {
             return this.cv.visitAnnotation(desc, visible);
         }
@@ -184,7 +184,7 @@ export abstract class ClassVisitor {
      * @return a visitor to visit the annotation values, or <tt>null</tt> if
      * this visitor is not interested in visiting this annotation.
      */
-    public visitTypeAnnotation(typeRef: number, typePath: TypePath, desc: string, visible: boolean): AnnotationVisitor {
+    public visitTypeAnnotation(typeRef: number, typePath: TypePath, desc: string, visible: boolean): AnnotationVisitor | null {
         if (this.api < Opcodes.ASM5) {
             throw new Error();
         }
@@ -257,7 +257,7 @@ export abstract class ClassVisitor {
      * <tt>null</tt> if this class visitor is not interested in visiting
      * these annotations and attributes.
      */
-    public visitField(access: number, name: string, desc: string, signature: string, value: any): FieldVisitor {
+    public visitField(access: number, name: string, desc: string, signature: string, value: any): FieldVisitor | null {
         if (this.cv != null) {
             return this.cv.visitField(access, name, desc, signature, value);
         }
@@ -289,7 +289,7 @@ export abstract class ClassVisitor {
      * if this class visitor is not interested in visiting the code of
      * this method.
      */
-    public visitMethod(access: number, name: string, desc: string, signature: string, exceptions: string[]): MethodVisitor {
+    public visitMethod(access: number, name: string, desc: string, signature: string, exceptions: string[]): MethodVisitor | null {
         if (this.cv != null) {
             return this.cv.visitMethod(access, name, desc, signature, exceptions);
         }

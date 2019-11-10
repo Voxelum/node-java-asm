@@ -50,7 +50,7 @@ export abstract class AnnotationVisitor {
      * The annotation visitor to which this visitor must delegate method calls.
      * May be null.
      */
-    av: AnnotationVisitor;
+    av: AnnotationVisitor?;
 
     /**
      * Constructs a new {@link AnnotationVisitor}.
@@ -62,7 +62,7 @@ export abstract class AnnotationVisitor {
      * the annotation visitor to which this visitor must delegate
      * method calls. May be null.
      */
-    public constructor(api: number, av: AnnotationVisitor = null) {
+    public constructor(api: number, av: AnnotationVisitor | null = null) {
         this.api = 0;
         if (api !== Opcodes.ASM4 && api !== Opcodes.ASM5) {
             throw new Error();
@@ -121,7 +121,7 @@ export abstract class AnnotationVisitor {
      * visited before calling other methods on this annotation
      * visitor</i>.
      */
-    public visitAnnotation(name: string, desc: string): AnnotationVisitor {
+    public visitAnnotation(name: string, desc: string): AnnotationVisitor | null {
         if (this.av != null) {
             return this.av.visitAnnotation(name, desc);
         }
@@ -142,7 +142,7 @@ export abstract class AnnotationVisitor {
      * visitor are ignored. <i>All the array values must be visited
      * before calling other methods on this annotation visitor</i>.
      */
-    public visitArray(name: string): AnnotationVisitor {
+    public visitArray(name: string): AnnotationVisitor | null {
         if (this.av != null) {
             return this.av.visitArray(name);
         }

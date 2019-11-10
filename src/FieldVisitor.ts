@@ -51,7 +51,7 @@ export abstract class FieldVisitor {
      * The field visitor to which this visitor must delegate method calls. May
      * be null.
      */
-    fv: FieldVisitor;
+    fv: FieldVisitor | null;
 
     /**
      * Constructs a new {@link FieldVisitor}.
@@ -63,7 +63,7 @@ export abstract class FieldVisitor {
      * the field visitor to which this visitor must delegate method
      * calls. May be null.
      */
-    public constructor(api: number, fv: FieldVisitor = null) {
+    public constructor(api: number, fv: FieldVisitor | null = null) {
         this.api = 0;
         if (api !== Opcodes.ASM4 && api !== Opcodes.ASM5) {
             throw new Error();
@@ -82,7 +82,7 @@ export abstract class FieldVisitor {
      * @return a visitor to visit the annotation values, or <tt>null</tt> if
      * this visitor is not interested in visiting this annotation.
      */
-    public visitAnnotation(desc: string, visible: boolean): AnnotationVisitor {
+    public visitAnnotation(desc: string, visible: boolean): AnnotationVisitor | null {
         if (this.fv != null) {
             return this.fv.visitAnnotation(desc, visible);
         }
@@ -107,7 +107,7 @@ export abstract class FieldVisitor {
      * @return a visitor to visit the annotation values, or <tt>null</tt> if
      * this visitor is not interested in visiting this annotation.
      */
-    public visitTypeAnnotation(typeRef: number, typePath: TypePath, desc: string, visible: boolean): AnnotationVisitor {
+    public visitTypeAnnotation(typeRef: number, typePath: TypePath, desc: string, visible: boolean): AnnotationVisitor | null {
         if (this.api < Opcodes.ASM5) {
             throw new Error();
         }
