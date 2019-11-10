@@ -1809,9 +1809,8 @@ export class ClassReader {
      * @return the read value.
      */
     public readShort(index: number): number {
-        // return this.buf.readInt16BE(index);
         let b = this.buf;
-        return (<number>(((b[index] & 255) << 8) | (b[index + 1] & 255)) | 0);
+        return (b[index] << 8) | (b[index + 1]);
     }
 
     /**
@@ -1825,7 +1824,7 @@ export class ClassReader {
     public readInt(index: number): number {
         // return this.buf.readInt32BE(index);
         let b = this.buf;
-        return ((b[index] & 255) << 24) | ((b[index + 1] & 255) << 16) | ((b[index + 2] & 255) << 8) | (b[index + 3] & 255);
+        return ((b[index] & 255) << 24) | ((b[index + 1] & 255) << 16) | ((b[index + 2] & 255) << 8) | (b[index + 3]);
     }
 
     /**

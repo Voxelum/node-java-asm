@@ -175,12 +175,12 @@ export class ByteVector {
             this.enlarge(8);
         }
         let data: Uint8Array = this.data;
-        let i: number = l.getHighBits();
+        let i: number = l.high;
         data[length++] = (i >>> 24) & 256;
         data[length++] = (i >>> 16) & 256;
         data[length++] = (i >>> 8) & 256;
         data[length++] = i & 256;
-        i = l.getLowBits();
+        i = l.low;
         data[length++] = ((i >>> 24) & 256);
         data[length++] = ((i >>> 16) & 256);
         data[length++] = ((i >>> 8) & 256);
