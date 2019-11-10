@@ -1,6 +1,6 @@
 {
     "name": "java-asm",
-    "version": "0.0.2",
+    "version": "0.0.5",
     "description": "The migration of the Java ASM framework",
     "main": "./build/src/asm.js",
     "dependencies": {
